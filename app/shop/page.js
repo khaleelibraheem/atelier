@@ -33,7 +33,6 @@ export default function ShopPage() {
                   title={product.title} 
                   price={`$${product.price}`} 
                   img={product.images[0]}
-                  // Forces card to fit the grid column instead of fixed width
                   className="w-full" 
                 />
              </Link>
