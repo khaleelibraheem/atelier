@@ -1,8 +1,7 @@
 import { Navbar } from "@/components/navbar";
-import { ProductCard } from "@/components/product-card";
-import { ArrowUpRight, MoveRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image"; // Import Image
+import Image from "next/image";
 import { products } from "@/lib/products";
 
 export default function Storefront() {
@@ -20,7 +19,6 @@ export default function Storefront() {
           <section className="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
             <Link href={`/product/${featuredProduct.slug}`} className="contents">
               <div className="relative md:col-span-8 bg-[#E5E5E5] rounded-2xl overflow-hidden group h-[500px] md:h-auto cursor-pointer">
-                {/* HERO IMAGE: Added 'priority' */}
                 <Image 
                   src={featuredProduct.images[0]} 
                   alt={featuredProduct.title} 
@@ -53,7 +51,7 @@ export default function Storefront() {
 
               <div className="h-[250px] relative rounded-2xl overflow-hidden bg-[#E5E5E5] group">
                 <Image 
-                 src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                 src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=987&auto=format&fit=crop" 
                  alt="Decor" 
                  fill
                  className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -68,7 +66,7 @@ export default function Storefront() {
           </section>
         </div>
 
-        {/* 2. INFINITE MARQUEE (Unchanged) */}
+        {/* 2. INFINITE MARQUEE */}
         <div className="w-full overflow-hidden border-y border-black/5 bg-white py-4 mt-20">
           <div className="animate-marquee inline-block">
             {[...Array(10)].map((_, i) => (
@@ -79,9 +77,7 @@ export default function Storefront() {
           </div>
         </div>
 
-{/* =========================================
-            3. TRENDING OBJECTS (The Editorial Grid + Optimized Images)
-           ========================================= */}
+        {/* 3. TRENDING OBJECTS (Updated for 2-Col Mobile) */}
         <section className="mx-auto max-w-7xl px-4 sm:px-6 mt-32">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
             
@@ -104,36 +100,34 @@ export default function Storefront() {
               </Link>
             </div>
 
-            {/* Right Column: The 2x2 Grid with Next/Image */}
+            {/* Right Column: The Grid */}
             <div className="lg:w-2/3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-12">
+              {/* UPDATED: grid-cols-2 on mobile, gap-x-4 */}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12">
                 {trendingProducts.map((product) => (
                   <Link key={product.id} href={`/product/${product.slug}`} className="group block">
                     
                     {/* Image Container */}
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#E5E5E5] mb-5">
-                       {/* OPTIMIZED IMAGE */}
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#E5E5E5] mb-4 sm:mb-5">
                        <Image 
                          src={product.images[0]} 
                          alt={product.title} 
                          fill
                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                         sizes="(max-width: 768px) 100vw, 33vw"
+                         sizes="(max-width: 768px) 50vw, 33vw"
                        />
-                       
-                       {/* Subtle Overlay on Hover */}
                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500 z-10" />
                     </div>
                     
                     {/* Minimal Info */}
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
                        <div>
-                         <h3 className="text-lg font-bold text-[#1A1A1A] group-hover:underline decoration-1 underline-offset-4 decoration-zinc-300 transition-all">
+                         <h3 className="text-sm sm:text-lg font-bold text-[#1A1A1A] group-hover:underline decoration-1 underline-offset-4 decoration-zinc-300 transition-all leading-tight">
                            {product.title}
                          </h3>
-                         <p className="text-sm text-zinc-500 mt-1">{product.category}</p>
+                         <p className="text-xs sm:text-sm text-zinc-500 mt-1">{product.category}</p>
                        </div>
-                       <span className="text-base font-medium">${product.price}</span>
+                       <span className="text-sm sm:text-base font-medium mt-1 sm:mt-0">${product.price}</span>
                     </div>
                   </Link>
                 ))}
@@ -143,7 +137,7 @@ export default function Storefront() {
           </div>
         </section>
 
-        {/* 4. THE PHILOSOPHY (Feature Strip) */}
+        {/* 4. THE PHILOSOPHY */}
         <section className="py-20 border-t border-black/5 mt-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -198,7 +192,7 @@ export default function Storefront() {
           </div>
         </div>
 
-        {/* 6. NEWSLETTER (Unchanged) */}
+        {/* 6. NEWSLETTER */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 mb-20">
           <section className="rounded-2xl border border-black/5 bg-white py-20 px-6 text-center shadow-sm">
              <h2 className="text-3xl font-bold tracking-tight mb-4 text-black">Join the Atelier.</h2>
@@ -223,7 +217,6 @@ export default function Storefront() {
   );
 }
 
-// Local Helper - Optimized
 function CollectionCard({ title, desc, img }) {
   return (
     <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
