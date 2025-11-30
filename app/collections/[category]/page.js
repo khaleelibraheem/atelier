@@ -5,21 +5,15 @@ import { Navbar } from "@/components/navbar";
 import { ProductCard } from "@/components/product-card";
 import { products } from "@/lib/products";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 export default function CollectionPage({ params }) {
   const { category } = use(params);
 
-  // Normalize category string for comparison (e.g., "Furniture" vs "furniture")
+  // Normalize category string for comparison
   const filteredProducts = products.filter(
     (p) => p.category.toLowerCase() === category.toLowerCase()
   );
-
-  if (filteredProducts.length === 0) {
-     // You could show a "No products found" state here instead of 404
-     // notFound(); 
-  }
 
   // Capitalize for display
   const title = category.charAt(0).toUpperCase() + category.slice(1);
@@ -44,15 +38,16 @@ export default function CollectionPage({ params }) {
           </p>
         </div>
 
-        {/* Grid */}
+        {/* Grid - Updated for 2 Columns on Mobile */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-x-6">
             {filteredProducts.map((product) => (
-              <Link key={product.id} href={`/product/${product.slug}`}>
+              <Link key={product.id} href={`/product/${product.slug}`} className="block">
                   <ProductCard 
                     title={product.title} 
                     price={`$${product.price}`} 
-                    img={product.images[0]} 
+                    img={product.images[0]}
+                    className="w-full" // Forces fluid width
                   />
               </Link>
             ))}
